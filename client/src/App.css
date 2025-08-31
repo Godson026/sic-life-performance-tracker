@@ -1,0 +1,25 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh; /* Ensure it's at least as tall as the viewport */
+}
+
+.main-content {
+  flex-grow: 1; /* This makes the main content take up all available space */
+  width: 100%; /* Prevents shrinking issues */
+  padding: 2rem;
+  height: 100vh;
+  overflow-y: auto; /* Only show a vertical scrollbar if content is too long */
+  overflow-x: hidden; /* Prevent horizontal scrollbar on the main page */
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  
+  .main-content {
+    height: auto;
+    min-height: calc(100vh - 60px); /* Adjust for mobile sidebar height */
+  }
+}

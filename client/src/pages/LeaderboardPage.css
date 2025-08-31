@@ -1,0 +1,273 @@
+.leaderboard-page { 
+  padding: 1rem; 
+}
+
+.leaderboard-filters { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 2rem; 
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-group { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.5rem; 
+  min-width: 150px;
+}
+
+.filter-group label { 
+  font-weight: 500; 
+  font-size: 0.9rem; 
+  color: #555; 
+}
+
+.filter-group select { 
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-group button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.btn-group button.active {
+  background-color: var(--primary-green);
+  color: white;
+  border-color: var(--primary-green);
+}
+
+.btn-group button:hover:not(.active) {
+  background-color: #f8f9fa;
+  border-color: var(--primary-green);
+}
+
+/* Podium Styling */
+.podium { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr; 
+  gap: 1.5rem; 
+  margin-bottom: 2rem; 
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.podium-card { 
+  padding: 1.5rem; 
+  border-radius: 12px; 
+  text-align: center; 
+  border: 2px solid transparent; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.podium-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.podium-card.rank-1 { 
+  border-color: var(--accent-yellow); 
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  order: 2;
+  transform: scale(1.1);
+}
+
+.podium-card.rank-2 { 
+  border-color: #c0c0c0; 
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  order: 1;
+}
+
+.podium-card.rank-3 { 
+  border-color: #cd7f32; 
+  background: linear-gradient(135deg, #fbf5ef, #f4e4bc);
+  order: 3;
+}
+
+.podium-trophy { 
+  font-size: 3rem; 
+  margin-bottom: 1rem;
+}
+
+.podium-card.rank-1 .podium-trophy {
+  color: var(--accent-yellow);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.podium-card.rank-2 .podium-trophy {
+  color: #c0c0c0;
+}
+
+.podium-card.rank-3 .podium-trophy {
+  color: #cd7f32;
+}
+
+.podium-rank {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.podium-ranker-name { 
+  font-size: 1.5rem; 
+  font-weight: 600; 
+  margin: 1rem 0 0.5rem; 
+  color: #333;
+}
+
+.podium-performance { 
+  font-size: 1.8rem; 
+  font-weight: 700; 
+  color: var(--primary-green); 
+  margin-top: 0.5rem;
+}
+
+.podium-metric {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Leaderboard Table Styling */
+.leaderboard-table-card { 
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.leaderboard-table-card .card-title {
+  background: var(--primary-green);
+  color: white;
+  padding: 1rem;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.leaderboard-table-card .card-content {
+  padding: 1rem;
+}
+
+/* Empty State Styling */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--primary-green);
+}
+
+.loading-state p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .leaderboard-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    min-width: auto;
+  }
+  
+  .podium {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .podium-card.rank-1 {
+    transform: none;
+    order: 1;
+  }
+  
+  .podium-card.rank-2 {
+    order: 2;
+  }
+  
+  .podium-card.rank-3 {
+    order: 3;
+  }
+  
+  .podium-card {
+    min-height: 150px;
+    padding: 1rem;
+  }
+  
+  .podium-trophy {
+    font-size: 2rem;
+  }
+  
+  .podium-ranker-name {
+    font-size: 1.2rem;
+  }
+  
+  .podium-performance {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .leaderboard-page {
+    padding: 0.5rem;
+  }
+  
+  .podium-card {
+    padding: 0.75rem;
+  }
+  
+  .podium-trophy {
+    font-size: 1.5rem;
+  }
+  
+  .podium-ranker-name {
+    font-size: 1rem;
+  }
+  
+  .podium-performance {
+    font-size: 1.2rem;
+  }
+}

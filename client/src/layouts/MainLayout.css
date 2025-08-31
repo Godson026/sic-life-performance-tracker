@@ -1,0 +1,31 @@
+/* --- Complete Replacement for MainLayout.css --- */
+
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw; /* Occupy full viewport width */
+  overflow-x: hidden; /* Prevent horizontal scroll on the highest level */
+  background-color: var(--light-grey);
+}
+
+.main-content-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allow this container to grow */
+  
+  /* THIS IS THE KEY FIX */
+  /* This prevents the flex child from expanding beyond its available space */
+  min-width: 0;
+  
+  height: 100vh;
+  overflow-y: auto; /* Allow vertical scroll for content */
+}
+
+.page-content {
+  padding: 0 2rem 2rem 2rem;
+  width: 100%;
+  /* No flex-grow needed here as the parent controls the growth */
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}

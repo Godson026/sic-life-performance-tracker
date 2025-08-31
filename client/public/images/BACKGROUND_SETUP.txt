@@ -1,0 +1,22 @@
+SIC LIFE BACKGROUND IMAGE SETUP
+
+To add a background image to the left panel of login/register pages:
+
+1. Save your background image as: sic-life-background.png
+2. Place it in this folder: sic-life-app/client/public/images/
+3. Recommended format: PNG (currently using) or JPG
+4. Recommended size: 1920x1080px or larger (will auto-scale)
+
+IMAGE RECOMMENDATIONS:
+- Professional business team in corporate setting
+- Modern office environment with diverse professionals
+- Abstract financial/insurance concept graphics
+- Ghanaian business culture representation
+
+CURRENT IMPLEMENTATION:
+- Background image with SIC Life green overlay (80% opacity)
+- Maintains brand colors while adding visual interest
+- Responsive design that works on all screen sizes
+- Professional appearance with your logo and text
+
+NEXT STEP: Add your sic-life-background.jpg file here

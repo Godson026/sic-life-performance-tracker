@@ -1,0 +1,470 @@
+.user-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 300px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+  color: #333; /* Dark gray for better readability */
+}
+
+.search-bar::placeholder {
+  color: #999; /* Medium gray for placeholder text */
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 2px rgba(0, 104, 55, 0.1);
+}
+
+.create-user-btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.create-user-btn:hover {
+  background-color: #005a2e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* New container for the table */
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* This is the key: creates a horizontal scrollbar ONLY for the table if needed */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #eee;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th, .users-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.users-table th { 
+  font-weight: 600;
+  background-color: #f8f9fa;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.users-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.users-table tr:last-child td {
+  border-bottom: none;
+}
+
+.users-table td {
+  white-space: nowrap; /* Prevents text from wrapping in cells, good for this layout */
+}
+
+/* New styles for the role 'pills' */
+.role-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.role-admin { 
+  background-color: #ffebee; 
+  color: #c62828; 
+}
+
+.role-branch-manager { 
+  background-color: #fff3e0; 
+  color: #f57c00; 
+}
+
+.role-coordinator { 
+  background-color: #e3f2fd; 
+  color: #1976d2; 
+}
+
+.role-agent { 
+  background-color: #e8f5e9; 
+  color: #388e3c; 
+}
+
+/* Branch assignment */
+.branch-assignment {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.branch-select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* Styles for the yellow buttons */
+.action-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-assign { 
+  background-color: #fff9c4; 
+  color: #795548; 
+}
+
+.btn-update { 
+  background-color: #fff9c4; 
+  color: #795548; 
+}
+
+.btn-assign:hover, .btn-update:hover {
+  background-color: #fff59d;
+  transform: translateY(-1px);
+}
+
+/* Actions column */
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions-cell svg { 
+  cursor: pointer; 
+  color: #777; 
+  transition: color 0.2s ease;
+}
+
+.actions-cell svg:hover {
+  color: #dc3545;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.modal-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  border-bottom: 1px solid #eee; 
+  padding-bottom: 1rem; 
+  margin-bottom: 1rem; 
+}
+
+.modal-header h2 { 
+  margin: 0; 
+}
+
+.close-btn { 
+  background: none; 
+  border: none; 
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.error-message { 
+  color: var(--danger-red); 
+  background-color: #ffebee; 
+  padding: 0.5rem; 
+  border-radius: 5px; 
+  text-align: center; 
+  margin: 1rem 0;
+  border: 1px solid #ffcdd2;
+}
+
+.modal-actions { 
+  display: flex; 
+  justify-content: flex-end; 
+  gap: 1rem; 
+  margin-top: 1.5rem; 
+}
+
+.btn-cancel { 
+  background-color: #f1f1f1; 
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #e5e5e5;
+}
+
+.btn-create { 
+  background-color: var(--primary-green); 
+  color: white; 
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-create:hover {
+  background-color: #005a2e;
+}
+
+/* Form styling for the modal */
+.modal-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modal-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.modal-form-group input,
+.modal-form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.modal-form-group input:focus,
+.modal-form-group select:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 2px rgba(0, 104, 55, 0.1);
+}
+
+.modal-form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.modal-form-actions button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.modal-form-actions .cancel-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.modal-form-actions .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+.modal-form-actions .submit-btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+}
+
+.modal-form-actions .submit-btn:hover {
+  background-color: #005a2e;
+}
+
+/* Loading and empty states */
+.loading-row {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .user-management-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .search-bar {
+    width: 100%;
+  }
+  
+  .create-user-btn {
+    width: 100%;
+  }
+  
+  .users-table {
+    font-size: 0.9rem;
+  }
+  
+  .users-table th, .users-table td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .modal-content {
+    width: 95vw;
+    padding: 1.5rem;
+  }
+  
+  .modal-form-actions {
+    flex-direction: column;
+  }
+  
+  .modal-form-actions button {
+    width: 100%;
+  }
+}
+
+/* Quick Stats Overview */
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stats-overview .stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--primary-green), #005a2e);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stats-overview .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: #FFD700; /* Bright yellow for icons */
+  opacity: 1;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+  color: #FFD700; /* Bright yellow for numbers */
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #FFD700; /* Bright yellow for labels */
+  opacity: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Responsive Design for Stats */
+@media (max-width: 768px) {
+  .stats-overview {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+  
+  .stat-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-value {
+    font-size: 1.8rem;
+  }
+}

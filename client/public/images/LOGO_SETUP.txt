@@ -1,0 +1,16 @@
+SIC LIFE LOGO SETUP
+
+To see your logo on the login and register pages:
+
+1. Save your SIC Life logo as: sic-life-logo.png
+2. Place it in this folder: sic-life-app/client/public/images/
+3. The logo should be a PNG image with transparent background
+4. Recommended size: 200x200px or larger
+
+Your logo will then appear on:
+- Left side of login page (large size)
+- Left side of register page (large size)  
+- Form headers (smaller size)
+
+Current status: Logo image missing - showing fallback gear icon
+Next step: Add your sic-life-logo.png file here
