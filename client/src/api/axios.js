@@ -5,7 +5,7 @@ import axios from 'axios';
 // In production, you'll replace 'YOUR_RENDER_BACKEND_URL_HERE' with your actual Render backend URL
 const API = axios.create({ 
     baseURL: process.env.NODE_ENV === 'production' 
-        ? 'YOUR_RENDER_BACKEND_URL_HERE' 
+        ? 'https://sic-life-backend.onrender.com' 
         : 'http://localhost:5000'
 });
 

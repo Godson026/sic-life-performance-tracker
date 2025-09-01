@@ -6,7 +6,7 @@ const config = {
         NODE_ENV: 'development'
     },
     production: {
-        API_BASE_URL: 'YOUR_RENDER_BACKEND_URL_HERE', // Replace with your actual Render URL
+        API_BASE_URL: 'https://sic-life-backend.onrender.com', // Replace with your actual Render URL
         NODE_ENV: 'production'
     }
 };
@@ -20,5 +20,5 @@ export default config[environment];
 // Alternative approach using environment variables (recommended for production)
 export const API_BASE_URL = process.env.VITE_API_BASE_URL || 
     (process.env.NODE_ENV === 'production' 
-        ? 'YOUR_RENDER_BACKEND_URL_HERE' 
+        ? 'https://sic-life-backend.onrender.com' 
         : 'http://localhost:5000');
