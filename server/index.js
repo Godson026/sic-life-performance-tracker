@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path'); // Required for serving static files in production
 const mongoose = require('mongoose'); // Required for graceful shutdown
 const connectDB = require('./config/db'); // Import after dotenv is configured
 
@@ -28,6 +29,22 @@ app.use('/api/targets', targetRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/ai', aiRoutes);
+
+// --- Production Configuration ---
+// Serve static files from the React app build directory
+if (process.env.NODE_ENV === 'production') {
+    // Serve static files from the client build
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+    
+    // Catch all handler: send back React's index.html file for any non-API routes
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send('API is running in development mode. Please set NODE_ENV to production for full app serving.');
+    });
+}
 
 // --- Health Check Endpoint ---
 app.get('/health', (req, res) => {
