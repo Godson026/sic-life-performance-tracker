@@ -1,25 +1,18 @@
 const express = require('express');
+const router = express.Router();
 const { getAdminDashboardSummary, getBranchManagerDashboardSummary, getAdminReportSummary, getBranchManagerReportSummary, getCoordinatorReportSummary, getManagerTargetsPageData } = require('../controllers/dashboardController');
 const { protect, admin, branchManager, coordinator } = require('../middleware/authMiddleware');
 
-const router = express.Router();
+// Dashboard summary routes
+router.get('/admin-summary', protect, admin, getAdminDashboardSummary);
+router.get('/manager-summary', protect, branchManager, getBranchManagerDashboardSummary);
 
-// Get admin dashboard summary
-router.route('/admin-summary').get(protect, admin, getAdminDashboardSummary);
+// Report routes
+router.get('/admin-report', protect, admin, getAdminReportSummary);
+router.get('/manager-report', protect, branchManager, getBranchManagerReportSummary);
+router.get('/coordinator-report', protect, coordinator, getCoordinatorReportSummary);
 
-// Get branch manager dashboard summary
-router.route('/manager-summary').get(protect, branchManager, getBranchManagerDashboardSummary);
-
-// Admin Reports Route
-router.route('/admin-report').get(protect, admin, getAdminReportSummary);
-
-// Branch Manager Reports Route
-router.route('/manager-report').get(protect, branchManager, getBranchManagerReportSummary);
-
-// Coordinator Reports Route
-router.route('/coordinator-report').get(protect, coordinator, getCoordinatorReportSummary);
-
-// Branch Manager Targets Page Route
-router.route('/manager-targets-page').get(protect, branchManager, getManagerTargetsPageData);
+// Manager targets page route
+router.get('/manager-targets-page', protect, branchManager, getManagerTargetsPageData);
 
 module.exports = router;
