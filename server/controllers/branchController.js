@@ -101,6 +101,11 @@ const getBranchDetails = async (req, res) => {
   try {
     const branchId = req.params.id;
 
+    // Validate branchId format before using it
+    if (!mongoose.Types.ObjectId.isValid(branchId)) {
+      return res.status(400).json({ message: 'Invalid branch ID format' });
+    }
+
     // Use Promise.all to fetch all data in parallel for this branch
     const [
       branchInfo,
