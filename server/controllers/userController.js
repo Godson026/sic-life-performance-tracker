@@ -195,6 +195,17 @@ const getBranchCoordinators = async (req, res) => {
   }
 };
 
+// @desc Get all Branch Managers (for Admin forms)
+const getBranchManagers = async (req, res) => {
+    try {
+        const managers = await User.find({ role: 'branch_manager' }).populate('branch', 'name');
+        res.json(managers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 const getBranchUsers = async (req, res) => {
   try {
     // Check if branch manager has a branch assigned
@@ -253,14 +264,16 @@ const updateUserRole = async (req, res) => {
   }
 };
 
+// --- EXPORTS ---
+// Ensure every function is exported
 module.exports = {
-  registerUser,
-  loginUser,
-  getUsers,
-  deleteUser,
-  assignBranch,
-  getBranchAgents,
-  getBranchCoordinators,
-  getBranchUsers,
-  updateUserRole
+    registerUser,
+    loginUser,
+    getUsers,
+    getBranchAgents,
+    getBranchCoordinators,
+    getBranchManagers,
+    deleteUser,
+    assignBranch,
+    updateUserRole
 };
