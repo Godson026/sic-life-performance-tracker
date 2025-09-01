@@ -28,6 +28,7 @@
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  color: #FFD700; /* Yellow font color for all stat-card-light text */
 }
 
 .stat-card-light:hover {
@@ -37,7 +38,7 @@
 
 .stat-card-light .label {
   font-size: 0.9rem;
-  color: #666;
+  color: #FFD700; /* Yellow font color for labels */
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -47,14 +48,14 @@
 .stat-card-light .value {
   font-size: 2.2rem;
   font-weight: 600;
-  color: var(--text-dark);
+  color: #FFD700; /* Yellow font color for values */
   margin-bottom: 0.5rem;
   line-height: 1.2;
 }
 
 .stat-card-light .subtext {
   font-size: 0.8rem;
-  color: var(--primary-green);
+  color: #FFD700; /* Yellow font color for subtext */
   font-weight: 500;
 }
 

@@ -6,6 +6,7 @@
   margin-bottom: 1.5rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  color: #FFD700; /* Yellow font color for all card text */
   
   /* ADD THESE CONTAINMENT PROPERTIES */
   width: 100%;
@@ -24,7 +25,7 @@
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: var(--primary-green);
+  color: #FFD700; /* Yellow font color for card titles */
   border-bottom: 2px solid var(--accent-yellow);
   padding-bottom: 0.5rem;
   
