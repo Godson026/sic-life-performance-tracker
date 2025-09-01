@@ -33,13 +33,39 @@ app.use('/api/ai', aiRoutes);
 // --- Production Configuration ---
 // Serve static files from the React app build directory
 if (process.env.NODE_ENV === 'production') {
-    // Serve static files from the client build
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    // Only serve static files if the client/dist directory exists
+    const clientDistPath = path.join(__dirname, '../client/dist');
     
-    // Catch all handler: send back React's index.html file for any non-API routes
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
-    });
+    try {
+        // Check if the client/dist directory exists
+        if (require('fs').existsSync(clientDistPath)) {
+            // Serve static files from the client build
+            app.use(express.static(clientDistPath));
+            
+            // Catch all handler: send back React's index.html file for any non-API routes
+            app.get('*', (req, res) => {
+                res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+            });
+        } else {
+            // If no frontend build exists, just serve the API
+            app.get('/', (req, res) => {
+                res.json({ 
+                    message: 'SIC Life Performance Tracker API is running',
+                    status: 'API Only Mode',
+                    endpoints: '/api, /health'
+                });
+            });
+        }
+    } catch (error) {
+        // Fallback to API-only mode
+        app.get('/', (req, res) => {
+            res.json({ 
+                message: 'SIC Life Performance Tracker API is running',
+                status: 'API Only Mode',
+                endpoints: '/api, /health'
+            });
+        });
+    }
 } else {
     app.get('/', (req, res) => {
         res.send('API is running in development mode. Please set NODE_ENV to production for full app serving.');
