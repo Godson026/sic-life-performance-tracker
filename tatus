@@ -1,0 +1,5 @@
+[33m864e3d8[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix deployment-blocking path-to-regexp errors in route files
+[33m4dafd31[m Configure app for production deployment
+[33m8e6c9f9[m Update card components to use yellow font color across the app
+[33m8a3aa0a[m Add Vercel deployment configuration - Frontend and backend setup for Vercel hosting
+[33md59d51c[m Initial commit: SIC Life Performance Tracker - Complete full-stack application with AI insights, role-based dashboards, and comprehensive reporting
