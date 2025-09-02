@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import Modal from 'react-modal';
+import API from '../api/axios';
 import { FiTrash2, FiUsers, FiUserCheck, FiUser, FiUserPlus, FiShield } from 'react-icons/fi'; // Import icons
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx'; // Import Card component
@@ -43,15 +43,10 @@ const AdminUserManagementPage = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminUser.token}`
-        }
-      };
 
       const [usersResponse, branchesResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/users', config),
-        axios.get('http://localhost:5000/api/branches', config)
+        API.get('/api/users'),
+        API.get('/api/branches')
       ]);
 
       setUsers(usersResponse.data);
@@ -71,19 +66,13 @@ const AdminUserManagementPage = () => {
     setModalError(''); // Reset previous errors
 
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminUser.token}`
-        }
-      };
-
       // Create the user
-      const { data } = await axios.post('http://localhost:5000/api/users/admin/create', {
+      const { data } = await API.post('/api/users/admin/create', {
         name: newUser.name,
         email: newUser.email,
         password: newUser.password,
         role: 'agent' // Default role
-      }, config);
+      });
 
       // Add new user to the top of the list for instant UI update
       setUsers(prevUsers => [data, ...prevUsers]);
@@ -108,13 +97,7 @@ const AdminUserManagementPage = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${adminUser.token}`
-          }
-        };
-
-        await axios.delete(`http://localhost:5000/api/users/${userId}`, config);
+        await API.delete(`/api/users/${userId}`);
         setUsers(users.filter((u) => u._id !== userId));
         alert('User deleted successfully!');
       } catch (error) {
@@ -132,14 +115,8 @@ const AdminUserManagementPage = () => {
     }
 
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminUser.token}`
-        }
-      };
-
-      const response = await axios.put(`http://localhost:5000/api/users/${userId}`, 
-        { branchId }, config);
+      const response = await API.put(`/api/users/${userId}`, 
+        { branchId });
       
       setUsers(prevUsers => prevUsers.map(u => u._id === userId ? response.data : u));
       alert('Branch assigned successfully!');
@@ -157,14 +134,8 @@ const AdminUserManagementPage = () => {
     }
 
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${adminUser.token}`
-        }
-      };
-
-      const response = await axios.put(`http://localhost:5000/api/users/${userId}/role`, 
-        { role: newRole }, config);
+      const response = await API.put(`/api/users/${userId}/role`, 
+        { role: newRole });
       
       setUsers(prevUsers => prevUsers.map(u => u._id === userId ? response.data : u));
       alert('Role updated successfully!');

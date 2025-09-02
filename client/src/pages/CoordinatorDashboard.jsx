@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 
@@ -23,15 +23,9 @@ const CoordinatorDashboard = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-
       const [agentsResponse, targetsResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/users/branch-agents', config),
-        axios.get('http://localhost:5000/api/targets/mytargets', config)
+        API.get('/api/users/branch-agents'),
+        API.get('/api/targets/mytargets')
       ]);
 
       setAgents(agentsResponse.data);
@@ -48,18 +42,12 @@ const CoordinatorDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-
-      await axios.post('http://localhost:5000/api/sales', {
+      await API.post('/api/sales', {
         agentId: formData.selectedAgent,
         date: formData.date,
         sales_amount: parseFloat(formData.salesAmount),
         new_registrations: parseInt(formData.newRegistrations)
-      }, config);
+      });
 
       alert('Record saved successfully!');
       setFormData({

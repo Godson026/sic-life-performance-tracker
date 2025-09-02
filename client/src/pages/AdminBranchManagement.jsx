@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 import { FiPlus, FiEye, FiEdit, FiTrash2, FiMapPin, FiUsers, FiUserCheck } from 'react-icons/fi';
@@ -34,15 +34,9 @@ const AdminBranchManagement = () => {
   const fetchBranches = async () => {
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      
       const [branchesResponse, statsResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/branches', config),
-        axios.get('http://localhost:5000/api/branches/stats', config)
+        API.get('/api/branches'),
+        API.get('/api/branches/stats')
       ]);
 
       setBranches(branchesResponse.data);
@@ -59,18 +53,12 @@ const AdminBranchManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-
       if (editingBranch) {
         // Update existing branch
-        await axios.put(`http://localhost:5000/api/branches/${editingBranch._id}`, formData, config);
+        await API.put(`/api/branches/${editingBranch._id}`, formData);
       } else {
         // Create new branch
-        await axios.post('http://localhost:5000/api/branches', formData, config);
+        await API.post('/api/branches', formData);
       }
 
       setShowModal(false);
@@ -95,12 +83,7 @@ const AdminBranchManagement = () => {
   const handleDelete = async (branchId) => {
     if (window.confirm('Are you sure you want to delete this branch? This action cannot be undone.')) {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        };
-        await axios.delete(`http://localhost:5000/api/branches/${branchId}`, config);
+        await API.delete(`/api/branches/${branchId}`);
         fetchBranches(); // Refresh the list
       } catch (error) {
         console.error('Error deleting branch:', error);
@@ -116,14 +99,8 @@ const AdminBranchManagement = () => {
     setShowDetailsModal(true);
     
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      
       // Fetch detailed branch information with live performance data
-      const response = await axios.get(`http://localhost:5000/api/branches/${branch._id}`, config);
+      const response = await API.get(`/api/branches/${branch._id}`);
       setSelectedBranch(response.data);
     } catch (error) {
       console.error('Error fetching branch details:', error);

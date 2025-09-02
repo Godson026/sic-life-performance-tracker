@@ -37,7 +37,7 @@ const CoordinatorLinks = () => (
   </>
 );
 
-const Sidebar = () => {
+const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -74,21 +74,31 @@ const Sidebar = () => {
   if (!user) return null;
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <h3>SIC Life LTD</h3>
-        <p>Performance Tracker</p>
-      </div>
-      <nav className="sidebar-nav">
-        {renderLinks()}
-      </nav>
-      <div className="sidebar-footer">
-        <button onClick={handleLogout} className="logout-btn">
-          <FiLogOut />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
+    <>
+      {/* Mobile overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="mobile-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+      
+      <aside className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+        <div className="sidebar-header">
+          <h3>SIC Life LTD</h3>
+          <p>Performance Tracker</p>
+        </div>
+        <nav className="sidebar-nav">
+          {renderLinks()}
+        </nav>
+        <div className="sidebar-footer">
+          <button onClick={handleLogout} className="logout-btn">
+            <FiLogOut />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 
@@ -17,12 +17,7 @@ const AdminBranchesPage = () => {
   const fetchBranches = async () => {
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      const response = await axios.get('http://localhost:5000/api/branches', config);
+      const response = await API.get('/api/branches');
       setBranches(response.data);
     } catch (error) {
       console.error('Error fetching branches:', error);
@@ -35,12 +30,7 @@ const AdminBranchesPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      const response = await axios.post('http://localhost:5000/api/branches', newBranch, config);
+      const response = await API.post('/api/branches', newBranch);
       setBranches([response.data, ...branches]);
       setNewBranch({ name: '', location: '' });
     } catch (error) {

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
+import './styles/mobile.css'; // Import mobile enhancements
 
 // Import ALL your page components
 import LoginPage from './pages/LoginPage.jsx';

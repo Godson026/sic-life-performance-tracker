@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { AuthContext } from '../context/AuthContext.jsx';
+import API from '../api/axios';
 import Card from '../components/Card.jsx';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -36,21 +36,23 @@ const AdminHomePage = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        };
-        const response = await axios.get('http://localhost:5000/api/dashboard/admin-summary', config);
+        console.log('Fetching admin dashboard data...');
+        const response = await API.get('/api/dashboard/admin-summary');
+        console.log('Admin dashboard response:', response.data);
         setDashboardData(response.data);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+        console.error('Error response:', error.response);
+        console.error('Error status:', error.response?.status);
+        console.error('Error data:', error.response?.data);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDashboardData();
+    if (user) {
+      fetchDashboardData();
+    }
   }, [user]);
 
   // --- NEW FUNCTION TO GET AI INSIGHT ---
@@ -58,12 +60,7 @@ const AdminHomePage = () => {
     setIsGenerating(true);
     setAiInsight(''); // Clear previous insight
     try {
-      const config = { 
-        headers: { 
-          Authorization: `Bearer ${user.token}` 
-        } 
-      };
-      const { data } = await axios.get('http://localhost:5000/api/ai/summary', config);
+      const { data } = await API.get('/api/ai/summary');
       setAiInsight(data.insight);
     } catch (error) {
       console.error("Failed to fetch AI Insight", error);

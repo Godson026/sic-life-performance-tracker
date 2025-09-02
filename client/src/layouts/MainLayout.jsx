@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar.jsx';
 import PageHeader from '../components/PageHeader.jsx'; // This will be our one and only header
@@ -24,15 +24,36 @@ const pathTitles = {
 
 const MainLayout = () => {
     const location = useLocation();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    
     // Look up the title in our map; provide a default if not found
     const title = pathTitles[location.pathname] || 'Dashboard';
 
+    // Close mobile menu when route changes
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [location.pathname]);
+
+    // Close mobile menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isMobileMenuOpen && !event.target.closest('.sidebar') && !event.target.closest('.mobile-menu-toggle')) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMobileMenuOpen]);
+
   return (
     <div className="main-layout">
-      <Sidebar />
+      <Sidebar isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
       <div className="main-content-area">
         {/* The PageHeader is now part of the main layout, ensuring 100% consistency */}
-        <PageHeader title={title} /> 
+        <PageHeader title={title} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} /> 
         <main className="page-content">
           <Outlet /> {/* Pages render here, WITHOUT their own headers */}
         </main>

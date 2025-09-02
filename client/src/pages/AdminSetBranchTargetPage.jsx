@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 import './AdminSetBranchTargetPage.css';
@@ -28,13 +28,7 @@ const AdminSetBranchTargetPage = () => {
       setLoading(true);
       setMessage({ type: '', text: '' });
       
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      
-      const response = await axios.get('http://localhost:5000/api/branches', config);
+      const response = await API.get('/api/branches');
       setBranches(response.data);
     } catch (error) {
       console.error('Error fetching branches:', error);
@@ -91,13 +85,6 @@ const AdminSetBranchTargetPage = () => {
       setIsSubmitting(true);
       setMessage({ type: '', text: '' });
       
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          'Content-Type': 'application/json'
-        }
-      };
-      
       // THE KEY FIX: Ensure payload keys match backend expectations
       const payload = {
         branchId: formData.branchId,
@@ -107,7 +94,7 @@ const AdminSetBranchTargetPage = () => {
         end_date: formData.end_date
       };
       
-      const response = await axios.post('http://localhost:5000/api/targets/branch', payload, config);
+      const response = await API.post('/api/targets/branch', payload);
       
       setMessage({ 
         type: 'success', 

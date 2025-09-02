@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 import Header from '../components/Header.jsx';
@@ -26,17 +26,11 @@ const BranchManagerDashboard = () => {
     try {
       setFetchLoading(true);
       
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-
       // Fetch targets, coordinators, and branch users in parallel
       const [targetsResponse, coordinatorsResponse, branchUsersResponse] = await Promise.all([
-        axios.get('http://localhost:5000/api/targets/mytargets', config),
-        axios.get('http://localhost:5000/api/users/branch-coordinators', config),
-        axios.get('http://localhost:5000/api/users/branch-users', config)
+        API.get('/api/targets/mytargets'),
+        API.get('/api/users/branch-coordinators'),
+        API.get('/api/users/branch-users')
       ]);
 
       setMyTargets(targetsResponse.data);
@@ -73,19 +67,13 @@ const BranchManagerDashboard = () => {
       setLoading(true);
       setError('');
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-
-      await axios.post('http://localhost:5000/api/targets/coordinator', {
+      await API.post('/api/targets/coordinator', {
         coordinatorId: selectedCoordinator,
         target_type: targetType,
         amount: parseFloat(amount),
         start_date: startDate,
         end_date: endDate
-      }, config);
+      });
 
       alert('Target set successfully!');
       

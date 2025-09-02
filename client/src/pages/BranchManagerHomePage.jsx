@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 import './BranchManagerHomePage.css';
@@ -15,17 +15,16 @@ const BranchManagerHomePage = () => {
             if (!user) return;
             try {
                 setLoading(true);
-                const config = { 
-                    headers: { 
-                        Authorization: `Bearer ${user.token}` 
-                    } 
-                };
-                const { data } = await axios.get('http://localhost:5000/api/dashboard/manager-summary', config);
+                console.log('Fetching branch manager dashboard data...');
+                const { data } = await API.get('/api/dashboard/manager-summary');
                 console.log('Branch Manager Dashboard Data:', data); // Debug log
                 setSummaryData(data);
                 setError('');
             } catch (error) {
                 console.error("Failed to fetch branch manager summary", error);
+                console.error('Error response:', error.response);
+                console.error('Error status:', error.response?.status);
+                console.error('Error data:', error.response?.data);
                 setError(error.response?.data?.message || 'Failed to load dashboard data');
             } finally {
                 setLoading(false);

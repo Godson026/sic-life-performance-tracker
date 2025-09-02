@@ -12,10 +12,15 @@ const API = axios.create({
 // Add a request interceptor to include the auth token in all requests
 API.interceptors.request.use(
     (config) => {
-        // Get the user from localStorage (this is where your auth token is stored)
-        const user = JSON.parse(localStorage.getItem('user'));
+        // Get the user from localStorage or sessionStorage (check both)
+        const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || 'null');
+        console.log('API Request - User:', user);
+        console.log('API Request - URL:', config.url);
         if (user && user.token) {
             config.headers.Authorization = `Bearer ${user.token}`;
+            console.log('API Request - Token added:', user.token.substring(0, 20) + '...');
+        } else {
+            console.log('API Request - No token found');
         }
         return config;
     },
@@ -32,8 +37,9 @@ API.interceptors.response.use(
     (error) => {
         // Handle 401 Unauthorized errors (token expired, invalid, etc.)
         if (error.response?.status === 401) {
-            // Clear the user from localStorage and redirect to login
+            // Clear the user from both localStorage and sessionStorage and redirect to login
             localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
             window.location.href = '/login';
         }
         return Promise.reject(error);

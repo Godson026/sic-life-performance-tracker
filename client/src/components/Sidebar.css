@@ -9,6 +9,19 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+/* Mobile overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 .sidebar-header {
@@ -107,9 +120,23 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .mobile-overlay {
+    display: block;
+  }
+  
   .sidebar {
-    width: 240px;
-    min-width: 240px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 280px;
+    min-width: 280px;
+    transform: translateX(-100%);
+    z-index: 1001;
+  }
+  
+  .sidebar.mobile-open {
+    transform: translateX(0);
   }
   
   .sidebar-header {
@@ -137,8 +164,8 @@
 
 @media (max-width: 480px) {
   .sidebar {
-    width: 220px;
-    min-width: 220px;
+    width: 260px;
+    min-width: 260px;
   }
   
   .sidebar-header h3 {

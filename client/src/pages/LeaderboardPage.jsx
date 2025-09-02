@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import API from '../api/axios';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Card from '../components/Card.jsx';
 import { FaTrophy } from 'react-icons/fa';
@@ -20,11 +20,9 @@ const LeaderboardPage = () => {
             setLoading(true);
             setError('');
             try {
-                const config = {
-                    headers: { Authorization: `Bearer ${user.token}` },
+                const response = await API.get('/api/leaderboard', {
                     params: { type, metric, period }
-                };
-                const response = await axios.get('http://localhost:5000/api/leaderboard', config);
+                });
                 setData(response.data);
             } catch (error) {
                 console.error("Failed to fetch leaderboard", error);

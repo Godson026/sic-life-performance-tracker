@@ -1,4 +1,5 @@
 import { createContext, useReducer, useEffect, useContext } from 'react';
+import API from '../api/axios';
 
 // Initial state
 const initialState = {
@@ -43,20 +44,12 @@ export const AuthProvider = ({ children }) => {
   // Login function
   const login = async (email, password, rememberMe = false) => {
     try {
-      const response = await fetch('http://localhost:5000/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await API.post('/api/users/login', {
+        email,
+        password
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
-      }
-
-      const data = await response.json();
+      const data = response.data;
       
       if (rememberMe) {
         localStorage.setItem('user', JSON.stringify(data));
