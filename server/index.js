@@ -18,7 +18,20 @@ const aiRoutes = require('./routes/aiRoutes');
 const app = express();
 
 // --- Middleware ---
-app.use(cors()); // Enable Cross-Origin Resource Sharing
+// CORS configuration for production
+const corsOptions = {
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'https://lucent-palmier-b049ba.netlify.app',
+        'https://sic-life-performance-tracker.netlify.app'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions)); // Enable Cross-Origin Resource Sharing
 app.use(express.json()); // Allow the app to accept JSON in the body of requests
 
 // --- API Routes ---
@@ -78,7 +91,27 @@ app.get('/health', (req, res) => {
         status: 'OK', 
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || 'development',
-        mongoUri: process.env.MONGO_URI ? 'Configured' : 'Missing'
+        mongoUri: process.env.MONGO_URI ? 'Configured' : 'Missing',
+        cors: 'Configured for Netlify',
+        version: '1.0.0'
+    });
+});
+
+// --- Error Handling Middleware ---
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).json({ 
+        message: 'Internal server error',
+        error: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+    });
+});
+
+// --- 404 Handler ---
+app.use('*', (req, res) => {
+    res.status(404).json({ 
+        message: 'Route not found',
+        path: req.originalUrl,
+        method: req.method
     });
 });
 
