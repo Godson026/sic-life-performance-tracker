@@ -11,7 +11,7 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Basic validation
     if (!name || !email || !password) {
@@ -32,7 +32,8 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password
+      password,
+      role: role || 'agent' // Use provided role or default to 'agent'
     });
 
     // Send response without password

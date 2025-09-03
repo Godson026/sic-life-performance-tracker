@@ -67,7 +67,7 @@ const AdminUserManagementPage = () => {
 
     try {
       // Create the user
-      const { data } = await API.post('/api/users/admin/create', {
+      const { data } = await API.post('/api/users/register', {
         name: newUser.name,
         email: newUser.email,
         password: newUser.password,
