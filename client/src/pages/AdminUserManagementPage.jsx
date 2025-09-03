@@ -115,7 +115,7 @@ const AdminUserManagementPage = () => {
     }
 
     try {
-      const response = await API.put(`/api/users/${userId}`, 
+      const response = await API.put(`/api/users/assign-branch/${userId}`, 
         { branchId });
       
       setUsers(prevUsers => prevUsers.map(u => u._id === userId ? response.data : u));
