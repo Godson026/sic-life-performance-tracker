@@ -134,7 +134,7 @@ const AdminUserManagementPage = () => {
     }
 
     try {
-      const response = await API.put(`/api/users/${userId}/role`, 
+      const response = await API.put(`/api/users/${userId}`, 
         { role: newRole });
       
       setUsers(prevUsers => prevUsers.map(u => u._id === userId ? response.data : u));
