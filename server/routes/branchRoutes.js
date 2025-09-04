@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createBranch, getBranches, getBranchStats, getBranchDetails } = require('../controllers/branchController');
+const { createBranch, getBranches, getBranchStats, getBranchDetails, updateBranch, deleteBranch } = require('../controllers/branchController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 // Get all branches (all authenticated users)
@@ -14,5 +14,11 @@ router.get('/stats', protect, admin, getBranchStats);
 
 // Get branch details by ID (admin only)
 router.get('/:id', protect, admin, getBranchDetails);
+
+// Update branch by ID (admin only)
+router.put('/:id', protect, admin, updateBranch);
+
+// Delete branch by ID (admin only)
+router.delete('/:id', protect, admin, deleteBranch);
 
 module.exports = router;
